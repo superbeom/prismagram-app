@@ -4,9 +4,16 @@ import { AppLoading } from "expo";
 import * as Font from "expo-font";
 import { Asset } from "expo-asset";
 import { Text, View } from "react-native";
+import AsyncStorage from "@react-native-community/async-storage";
+import { InMemoryCache } from "apollo-cache-inmemory";
+import { persistCache } from "apollo-cache-persist";
+import ApolloClient from "apollo-boost";
+import { ApolloProvider } from "react-apollo-hooks";
+import apolloClientOptions from "./apollo";
 
-export default function App() {
+export default App = () => {
   const [loaded, setLoaded] = useState(false);
+  const [client, setClient] = useState(null);
 
   const preLoad = async () => {
     try {
@@ -16,7 +23,17 @@ export default function App() {
       });
       /* Load Asset */
       await Asset.loadAsync([require("./assets/logo.png")]);
+      const cache = new InMemoryCache();
+      await persistCache({
+        cache,
+        storage: AsyncStorage,
+      });
+      const apolloClient = new ApolloClient({
+        cache,
+        ...apolloClientOptions,
+      });
       setLoaded(true);
+      setClient(apolloClient);
     } catch (error) {
       console.log(error);
     }
@@ -26,11 +43,13 @@ export default function App() {
     preLoad();
   }, []);
 
-  return loaded ? (
-    <View style={{ padding: 50 }}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
+  return loaded && client ? (
+    <ApolloProvider client={client}>
+      <View>
+        <Text>Open up App.js to start working on your app!</Text>
+      </View>
+    </ApolloProvider>
   ) : (
     <AppLoading />
   );
-}
+};
