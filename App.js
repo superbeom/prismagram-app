@@ -17,6 +17,7 @@ import { AuthProvider } from "./AuthContext";
 export default App = () => {
   const [loaded, setLoaded] = useState(false);
   const [client, setClient] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
 
   const preLoad = async () => {
     try {
@@ -39,6 +40,14 @@ export default App = () => {
         ...apolloClientOptions,
       });
 
+      /* Check User Log in */
+      const checkIsLoggedIn = await AsyncStorage.getItem("isLoggedIn");
+      if (checkIsLoggedIn === null || checkIsLoggedIn === "false") {
+        setIsLoggedIn(false);
+      } else {
+        setIsLoggedIn(true);
+      }
+
       /* Set State */
       setLoaded(true);
       setClient(apolloClient);
@@ -51,10 +60,10 @@ export default App = () => {
     preLoad();
   }, []);
 
-  return loaded && client ? (
+  return loaded && client && isLoggedIn !== null ? (
     <ApolloProvider client={client}>
       <ThemeProvider theme={styles}>
-        <AuthProvider>
+        <AuthProvider isLoggedIn={isLoggedIn}>
           <NavController />
         </AuthProvider>
       </ThemeProvider>
