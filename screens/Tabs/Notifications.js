@@ -1,8 +1,8 @@
 import React from "react";
-import { View, Text } from "./config";
+import { View, Text } from "../config";
 
 export default () => (
   <View>
-    <Text>Home</Text>
+    <Text>Notifications</Text>
   </View>
 );
