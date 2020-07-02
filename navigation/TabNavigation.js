@@ -1,6 +1,7 @@
 import React from "react";
-import { View } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import StackFactoryNavigation from "./StackFactoryNavigation";
 import Home from "../screens/Tabs/Home";
 import Search from "../screens/Tabs/Search";
 import Notifications from "../screens/Tabs/Notifications";
@@ -10,8 +11,28 @@ const TabNavigation = createBottomTabNavigator();
 
 export default () => (
   <TabNavigation.Navigator>
-    <TabNavigation.Screen name="Home" component={Home} />
-    <TabNavigation.Screen name="Search" component={Search} />
+    <TabNavigation.Screen
+      name="Home"
+      component={StackFactoryNavigation}
+      initialParams={{
+        customRoute: Home,
+        customConfig: {
+          headerRight: () => (
+            <TouchableOpacity>
+              <Text>Hello</Text>
+            </TouchableOpacity>
+          ),
+        },
+      }}
+    />
+    <TabNavigation.Screen
+      name="Search"
+      component={StackFactoryNavigation}
+      initialParams={{
+        customRoute: Search,
+        customConfig: {},
+      }}
+    />
     <TabNavigation.Screen
       name="Add"
       component={View}
@@ -25,7 +46,21 @@ export default () => (
         },
       })}
     />
-    <TabNavigation.Screen name="Notifications" component={Notifications} />
-    <TabNavigation.Screen name="Profile" component={Profile} />
+    <TabNavigation.Screen
+      name="Notifications"
+      component={StackFactoryNavigation}
+      initialParams={{
+        customRoute: Notifications,
+        customConfig: {},
+      }}
+    />
+    <TabNavigation.Screen
+      name="Profile"
+      component={StackFactoryNavigation}
+      initialParams={{
+        customRoute: Profile,
+        customConfig: {},
+      }}
+    />
   </TabNavigation.Navigator>
 );
