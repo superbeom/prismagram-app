@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { View } from "../config";
 import constants from "../../constants";
+import AuthButton from "../../components/AuthButton";
 
 const Image = styled.Image`
   width: ${constants.width}px;
@@ -10,21 +11,9 @@ const Image = styled.Image`
 
 const Touchable = styled.TouchableOpacity``;
 
-const SignUpBtn = styled.View`
-  width: ${constants.width / 2}px;
-  background-color: ${(props) => props.theme.blueColor};
-  padding: 10px;
-  border-radius: 4px;
-  margin-bottom: 20px;
+const LoginLink = styled.View`
+  margin-top: 20px;
 `;
-
-const SignUpBtnText = styled.Text`
-  color: white;
-  text-align: center;
-  font-weight: 600;
-`;
-
-const LoginLink = styled.View``;
 
 const LoginLinkText = styled.Text`
   color: ${(props) => props.theme.blueColor};
@@ -35,11 +24,10 @@ export default ({ navigation }) => {
   return (
     <View>
       <Image resizeMode={"contain"} source={require("../../assets/logo.png")} />
-      <Touchable onPress={() => navigation.navigate("Signup")}>
-        <SignUpBtn>
-          <SignUpBtnText>Create New Account</SignUpBtnText>
-        </SignUpBtn>
-      </Touchable>
+      <AuthButton
+        onPress={() => navigation.navigate("Signup")}
+        text={"Create New Account"}
+      />
       <Touchable onPress={() => navigation.navigate("Login")}>
         <LoginLink>
           <LoginLinkText>Log in</LoginLinkText>
