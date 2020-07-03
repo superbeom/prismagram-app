@@ -1,23 +1,32 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import constants from "../constants";
 
 const Container = styled.View`
   margin-bottom: 20px;
 `;
 
-const TextInput = styled.TextInput``;
+const TextInput = styled.TextInput`
+  width: ${constants.width / 2}px;
+  padding: 10px;
+  background-color: ${(props) => props.theme.greyColor};
+  border: 1px solid ${(props) => props.theme.darkGreyColor};
+  border-radius: 4px;
+`;
 
 const AuthInput = ({
-  placeholder,
   value,
+  onChange,
+  placeholder,
   keyboardType = "default",
   autoCapitalize = "none",
 }) => (
   <Container>
     <TextInput
-      placeholder={placeholder}
       value={value}
+      onChangeText={onChange}
+      placeholder={placeholder}
       keyboardType={keyboardType}
       autoCapitalize={autoCapitalize}
     />
@@ -25,8 +34,9 @@ const AuthInput = ({
 );
 
 AuthInput.propTypes = {
-  placeholder: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  placeholder: PropTypes.string.isRequired,
   keyboardType: PropTypes.oneOf([
     "default",
     "number-pad",
