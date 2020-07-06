@@ -10,7 +10,7 @@ import AuthButton from "../../components/AuthButton";
 export default ({ navigation }) => {
   const emailInput = useInput("");
   const [loading, setLoading] = useState(false);
-  const requestSecretMutation = useMutation(LOG_IN, {
+  const [requestSecretMutation] = useMutation(LOG_IN, {
     variables: { email: emailInput.value },
   });
 
@@ -28,7 +28,7 @@ export default ({ navigation }) => {
 
     try {
       setLoading(true);
-      await requestSecretMutation;
+      await requestSecretMutation();
       Alert.alert("Check your email");
       navigation.navigate("Confirm");
     } catch (error) {
