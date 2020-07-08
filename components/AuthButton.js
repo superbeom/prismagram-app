@@ -7,7 +7,7 @@ import constants from "../constants";
 const Touchable = styled.TouchableOpacity``;
 
 const Container = styled.View`
-  width: ${constants.width / 2}px;
+  width: ${constants.width / 1.5}px;
   background-color: ${(props) => props.theme.blueColor};
   padding: 10px;
   border-radius: 4px;

@@ -7,8 +7,8 @@ import useInput from "../../hooks/useInput";
 import AuthInput from "../../components/AuthInput";
 import AuthButton from "../../components/AuthButton";
 
-export default ({ navigation }) => {
-  const emailInput = useInput("");
+export default ({ route, navigation }) => {
+  const emailInput = useInput(route.params ? route.params.email : "");
   const [loading, setLoading] = useState(false);
 
   const [requestSecretMutation] = useMutation(LOG_IN, {
